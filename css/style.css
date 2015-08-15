@@ -1,0 +1,106 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+article, aside, details, figcaption, figure,
+footer, header, menu, nav, section {
+    display: block;
+}
+
+body {
+    line-height: 1;
+}
+input[type="checkbox"] {margin: 0}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+article, aside, details, figcaption, figure, footer, header, main, nav, section, summary {
+    display: block;
+}
+body {
+    font: 12px Arial, sans-serif;
+    background-color: #afbec8;
+}
+h1 {
+    font-size: 18px;
+}
+.wrapper {
+    width: 1000px;
+    margin: 0 auto;
+    padding: 50px;
+}
+.player {
+    width: 660px;
+    margin: 0 auto;
+    height: 430px;
+}
+.player .header{
+    border-top-left-radius: 10px;
+    -moz-border-top-left-radius: 10px;
+    -webkit-border-top-left-radius: 10px;
+    -khtml-border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    -moz-border-top-right-radius: 10px;
+    -webkit-border-top-right-radius: 10px;
+    -khtml-border-top-right-radius: 10px;
+    background-color: #c6d9e3;
+    height: 260px;
+    position: relative;
+}
+.player .line{
+    background-color: #4f6771;
+    height: 50px;
+}
+.player .footer{
+    height: 114px;
+    background-color: #FFFFFF;
+    border-bottom-left-radius: 10px;
+    -moz-border-bottom-left-radius: 10px;
+    -webkit-border-bottom-left-radius: 10px;
+    -khtml-border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    -moz-border-bottom-right-radius: 10px;
+    -webkit-border-bottom-right-radius: 10px;
+    -khtml-border-bottom-right-radius: 10px;
+}
+.player .footer .buttons{
+    padding: 10px;
+}
+.player .header .choose {
+    position: absolute;
+    top: 50px;
+    left: 60px;
+    font-size: 16px;
+    color: #294452;
+}
+.player .header .choose a {
+    color: #277F7F;
+}
