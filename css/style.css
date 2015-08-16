@@ -72,12 +72,12 @@ h1 {
     -webkit-border-top-right-radius: 10px;
     -khtml-border-top-right-radius: 10px;
     background-color: #c6d9e3;
-    height: 260px;
-    position: relative;
+    padding: 10px;
 }
 .player .line{
     background-color: #4f6771;
     height: 50px;
+    display: none;
 }
 .player .footer{
     height: 114px;
@@ -90,17 +90,84 @@ h1 {
     -moz-border-bottom-right-radius: 10px;
     -webkit-border-bottom-right-radius: 10px;
     -khtml-border-bottom-right-radius: 10px;
+    display: none;
 }
 .player .footer .buttons{
     padding: 10px;
 }
-.player .header .choose {
-    position: absolute;
-    top: 50px;
-    left: 60px;
+.player .header .choose{
     font-size: 16px;
     color: #294452;
+    width: 100%;
+    display: block;
+    height: 50px;
+    text-align: center;
+    padding-top: 35px;
+    border: 1px solid transparent;
 }
-.player .header .choose a {
-    color: #277F7F;
+
+.player .header .choose:hover{
+    border: 1px dashed #294452;
+}
+
+.player .header .choose .file{
+    display: none;
+}
+.player .header .choose .button{
+    cursor: pointer;
+    text-decoration: underline;
+}
+.player .playlist{
+    background-color: #58B7DE;
+    padding: 20px;
+    display: none;
+    line-height: 23px;
+}
+.player .playlist:after{
+    content: '';
+    clear: both;
+    display: block;
+}
+
+.player .playlist span{
+    display: block;
+    float: left;
+    padding-right: 30px;
+    padding-left: 25px;
+    color: #FFFFFF;
+}
+
+.player .playlist span.name:before{
+    content: 'Проигрывается файл:';
+    color: #405869;
+    padding-right: 10px;
+    text-decoration: underline;
+}
+.player .playlist span.title:before{
+    content: 'Название:';
+    color: #405869;
+    padding-right: 10px;
+    text-decoration: underline;
+}
+.player .playlist span.artist:before{
+    content: 'Исполнитель:';
+    padding-right: 10px;
+    color: #405869;
+    text-decoration: underline;
+}
+
+.player .header .drop {
+    border: 1px dashed #294452;
+}
+.player .header .loading{
+    position: relative;
+}
+.player .header .loading:after{
+    content: '';
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    top: 25px;
+    left: 280px;
+    background: url("../img/load.gif") no-repeat;
 }

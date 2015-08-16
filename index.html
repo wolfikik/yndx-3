@@ -1,7 +1,5 @@
 <!--
-Создайте с помощью WebAudio API плеер, который:
 
-умеет открывать аудиофайлы (поддерживаемых браузером форматов) с локального диска;
 поддерживает drag'n'drop;
 имеет кнопки play и stop;
 выводит название проигрываемого файла;
@@ -20,20 +18,16 @@
     <title>Задание 3</title>
     <link rel="stylesheet" type="text/css" href="css/style.css" />
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-    <script src="js/script.js"></script>
+    <script src="js/id3.min.js"></script>
+    <script src="js/jquery.player.js"></script>
+    <script type="application/javascript">
+        $(function(){
+            $('.player').player();
+        });
+    </script>
 </head>
 <body>
     <div class="wrapper">
-        <div class="player">
-            <div class="header">
-                <span class="choose"><a href="">Выберите</a> или перетащите аудиофайл.</span>
-            </div>
-            <div class="line"></div>
-            <div class="footer">
-                <div class="buttons">
-                    <img src="img/play.png"><img src="img/stop.png">
-                </div>
-            </div>
-        </div>
+        <div class="player"></div>
     </div>
 </body>
