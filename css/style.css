@@ -80,7 +80,6 @@ h1 {
     display: none;
 }
 .player .footer{
-    height: 114px;
     background-color: #FFFFFF;
     border-bottom-left-radius: 10px;
     -moz-border-bottom-left-radius: 10px;
@@ -94,6 +93,7 @@ h1 {
 }
 .player .footer .buttons{
     padding: 10px;
+    text-align: center;
 }
 .player .header .choose{
     font-size: 16px;
@@ -170,4 +170,9 @@ h1 {
     top: 25px;
     left: 280px;
     background: url("../img/load.gif") no-repeat;
+}
+.player .footer .buttons img{
+    width: 50px;
+    height: auto;
+    padding-left: 10px;
 }
