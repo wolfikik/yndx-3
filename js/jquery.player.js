@@ -1,5 +1,7 @@
 (function($) {
-    var defaults = {};
+    var defaults = {
+        'type': 'waveform'
+    };
     var options;
 
     $.fn.player = function(params){
@@ -11,19 +13,22 @@
             contextCanvas,
             startedAt,
             pausedAt,
+            visual = 1,
             paused;
 
-        $(this).html('<div class="header"><span class="choose"><label class="file_upload"><span class="button">Выберите</span><input class="file" type="file"></label> или перетащите аудиофайл.</span><div class="canvas"></div></div><div class="playlist"></div><div class="line"></div><div class="footer"><div class="buttons"><img class="play" src="img/play.png"><img class="pause" src="img/pause.png"><img class="stop" src="img/stop.png"></div></div>');
-
-        var header = $(this).find('.header'),
-            choose = $(this).find('.choose'),
-            file = $(this).find('.file'),
-            line = $(this).find('.line'),
-            playlist = $(this).find('.playlist'),
-            play = $(this).find('.play'),
-            pause = $(this).find('.pause'),
-            stop = $(this).find('.stop'),
-            footer = $(this).find('.footer');
+        var header = $('<div />', {class: "header"}).appendTo($(this)),
+            choose = $('<span />', {class: "choose"}).appendTo(header),
+            label = $('<label />', {class: "file_upload"}).appendTo(choose),
+            btn = $('<span class="button">Выберите</span>').appendTo(label),
+            file = $('<input />', {class: 'file', type: 'file'}).appendTo(label),
+            txt = $(label).append(' или перетащите аудиофайл.'),
+            canvas = $('<div />', {class: 'canvas'}).appendTo(header),
+            playlist = $('<div />', {class: "playlist"}).appendTo($(this)),
+            footer = $('<div />', {class: "footer"}).appendTo($(this)),
+            buttons = $('<div />', {class: "buttons"}).appendTo(footer),
+            play = $('<img />', {class: "play", src: 'img/play.png'}).appendTo(buttons),
+            pause = $('<img />', {class: "pause", src: 'img/pause.png'}).appendTo(buttons),
+            stop = $('<img />', {class: "stop", src: 'img/stop.png'}).appendTo(buttons);
 
         try {
             var context = new (window.AudioContext || window.webkitAudioContext)();
@@ -33,8 +38,6 @@
         }
 
         var analyser = context.createAnalyser();
-            analyser.fftSize = 2048;
-
 
         var methods = {
             loadFile: function(e){
@@ -48,14 +51,13 @@
 
                 methods.play();
                 choose.removeClass('loading');
-                line.show();
+                canvas.show();
                 playlist.show();
                 footer.show();
             },
             bufferError: function(e){
                 console.log(e);
                 choose.removeClass('loading');
-                line.hide();
                 playlist.hide();
                 footer.hide();
             },
@@ -65,7 +67,11 @@
                 source.buffer = buffer;
                 source.connect(context.destination);
                 source.connect(analyser);
-                methods.visualization();
+
+                if(options.type == 'waveform')
+                    methods.waveform();
+                else if(options.type == 'spectrum')
+                    methods.spectrum();
 
                 paused = false;
                 play.hide();
@@ -106,7 +112,7 @@
                 methods.initAudio(e.originalEvent.dataTransfer.files[0]);
             },
             initAudio: function(file){
-
+                fileee = file;
                 methods.initCanvas();
 
                 var reader = new FileReader();
@@ -134,7 +140,7 @@
             },
             initCanvas : function() {
                 var newCanvas  = methods.createCanvas (canvasWidth, canvasHeight);
-                header.find('.canvas').html(newCanvas);
+                canvas.html(newCanvas);
                 contextCanvas = newCanvas.getContext('2d');
             },
             createCanvas: function ( w, h ) {
@@ -143,11 +149,12 @@
                 newCanvas.height = h;
                 return newCanvas;
             },
-            visualization: function(){
+            waveform: function(){
+                analyser.fftSize = 2048;
                 var bufferLength = analyser.frequencyBinCount;
                 var dataArray = new Uint8Array(bufferLength);
                 contextCanvas.clearRect(0, 0, canvasWidth, canvasHeight);
-                drawVisual = requestAnimationFrame(methods.visualization);
+                requestAnimationFrame(methods.waveform);
                 analyser.getByteTimeDomainData(dataArray);
 
                 contextCanvas.fillStyle = '#c6d9e3';
@@ -169,6 +176,28 @@
                 }
                 contextCanvas.lineTo(canvasWidth, canvasHeight/2);
                 contextCanvas.stroke();
+            },
+            spectrum: function() {
+                refresh.show();
+                analyser.smoothingTimeConstant = 0.3;
+                analyser.fftSize = 1024;
+
+                var javascriptNode = context.createScriptProcessor(2048, 1, 1);
+                javascriptNode.connect(context.destination);
+
+                analyser.connect(javascriptNode);
+
+                javascriptNode.onaudioprocess = function() {
+                    var array =  new Uint8Array(analyser.frequencyBinCount);
+                    analyser.getByteFrequencyData(array);
+                    contextCanvas.clearRect(0, 0, canvasWidth, canvasHeight);
+
+                    contextCanvas.fillStyle = '#58B7DE';
+                    for ( var i = 0; i < (array.length); i++ ){
+                        var value = array[i];
+                        contextCanvas.fillRect(i*5,200-value,3,200);
+                    }
+                };
             }
         };
 
@@ -186,8 +215,6 @@
         stop.on('click', function () {
             methods.stop();
         });
-
-
 
         return this;
     };
